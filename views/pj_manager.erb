@@ -1,0 +1,50 @@
+<div id="header">
+  <h1>Welcome to Project Manager Portal</h1>
+</div>
+
+<br>
+
+<div class="wrapper">
+  <div id="project_form">
+    <h3>Add a <span class="title">project</span>:</h3>
+    <form action="/pj_manager/projects" method="post">
+      <label for="client">Client:</label>
+      <input type="text" name="client" required>
+
+      <label for="description">Description:</label>
+      <input type="text" name="description" required>
+
+      <label for="due_date">Due Date:</label>
+      <input type="date" name="due_date" required>
+
+      <button type="submit" name="button">Add Project</button>
+    </form>
+  </div>
+
+  <hr>
+
+  <% if @projects.any?() %>
+  <h3 class="table_title">Manage your projects</h3>
+    <table>
+      <th>NAME</th>
+      <th>DESCRIPTION</th>
+      <th>DUE DATE</th>
+      <th></th>
+      <% @projects.each() do |project| %>
+        <tr>
+          <td><a href="/pj_manager/projects/<%= project.id() %>"><%= project.client() %></a></td>
+          <td><%= project.description() %></td>
+          <td><%= project.due_date() %></td>
+          <td>
+            <form action="/pj_manager/projects/<%= project.id() %>" method="post">
+              <input name="_method" type="hidden" value="delete">
+              <button type="submit" name="button">DELETE</button>
+            </form>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+  <h3>There are no projects in the database. <span class="add_prompt">Please document your projects.</span></h3>
+  <% end %>
+</div>

@@ -1,0 +1,98 @@
+<div id="header">
+  <h1>Welcome to HR Manager Portal</h1>
+</div>
+
+<br>
+
+<div class="wrapper">
+  <div id="division_form">
+    <h3>Add a <span class="title">division</span>:</h3>
+    <form action="/hr_manager/divisions" method="post">
+      <label for="name">Name:</label>
+      <input type="text" name="name" required>
+
+      <button type="submit" name="button">Add division</button>
+    </form>
+  </div>
+
+  <hr>
+
+  <% if @divisions.any?() %>
+  <h3 class="table_title">Manage your divisions</h3>
+    <table>
+      <th>NAME</th>
+      <th></th>
+        <% @divisions.each() do |division| %>
+        <tr>
+          <td><a href="/hr_manager/divisions/<%= division.id() %>"><%= division.name() %></a></td>
+          <td>
+            <form action="/hr_manager/divisions/<%= division.id() %>" method="post">
+              <input name="_method" type="hidden" value="delete">
+              <button type="submit" name="button">DELETE</button>
+            </form>
+          </td>
+        </tr>
+        <% end %>
+    </table>
+  <% else %>
+  <h3>There are no divisions in the database. <span class="add_prompt">Please document your divisions.</span></h3>
+  <% end %>
+</div>
+
+<div class="wrapper">
+  <% if @divisions.any?() %>
+    <div id="employee_form">
+      <h3>Add a <span class="title">employee</span>:</h3>
+      <form action="/hr_manager/employees" method="post">
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name" required>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" name="last_name" required>
+
+        <label for="email">Email:</label>
+        <input type="text" name="email" required>
+
+        <select name="division_id">
+          <label for="division_id">Assigned Division:</label>
+          <% @divisions.each() do |division| %>
+            <option value="<%= division.id() %>"><%= division.name() %></option>
+          <% end %>
+        </select>
+
+        <button type="submit" name="button">Add employee</button>
+      </form>
+    </div>
+  <% end %>
+
+  <% if @employees.any?() & @divisions.any?()%>
+  <h3 class="table_title">Manage your employees</h3>
+    <table>
+      <th>NAME</th>
+      <th>EMAIL</th>
+      <th>DIVISION</th>
+      <th></th>
+        <% @employees.each() do |employee| %>
+        <tr>
+          <td><a href="/hr_manager/employees/<%= employee.id() %>"><%= employee.first_name() %> <%= employee.last_name() %></a></td>
+          <td><%= employee.email() %></td>
+          <td>
+            <% if Division.find_by_id(employee.division_id()) %>
+              <%= Division.find(employee.division_id().to_i()).name() %>
+            <% else %>
+                None
+            <% end %>
+          </td>
+          <td>
+            <form action="/hr_manager/employees/<%= employee.id() %>" method="post">
+              <input name="_method" type="hidden" value="delete">
+              <button type="submit" name="button">DELETE</button>
+            </form>
+          </td>
+        </tr>
+        <% end %>
+    </table>
+  <% else %>
+  <h3>There are no employees in the database. <span class="add_prompt">Please document your employees.</span></h3>
+  <% end %>
+</div>

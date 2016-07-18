@@ -1,0 +1,38 @@
+<div class="wrapper">
+  <form action="/hr_manager/employees/<%= @employee.id() %>" method="post">
+    <h3><%= @employee.first_name() %> <%= @employee.last_name() %></h3>
+    <input type="hidden" name="_method" value="patch">
+    <table>
+      <th>
+        <label for="first_name">Name</label>
+        <label for="last_name"></label>
+      </th>
+      <th>
+        <label for="email">Email</label>
+      </th>
+      <th>
+        <label for="division_id">Division</label>
+      </th>
+      <tr>
+        <td>
+          <input type="text" name="first_name" value="<%= @employee.first_name() %>">
+          <input type="text" name="last_name" value="<%= @employee.last_name() %>">
+        </td>
+        <td>
+          <input type="text" name="email" value="<%= @employee.email() %>">
+        </td>
+        <td>
+          <select name="division_id">
+            <label for="division_id">Assigned Division:</label>
+              <option value="" disabled="disabled" selected="selected">Choose Divison:</option>
+            <% @divisions.each() do |division| %>
+              <option value="<%= division.id() %>"><%= division.name() %></option>
+            <% end %>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <button type="submit">Save Changes</button>
+  </form>
+  <a href="/hr_manager" class="btn btn-default" role="button">Back</a>
+</div>
