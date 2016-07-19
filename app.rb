@@ -38,6 +38,7 @@ end
 get('/hr_manager/employees/:id') do
   @employee = Employee.find(params.fetch('id').to_i())
   @divisions = Division.all()
+  @projects = Project.all()
   erb(:employee)
 end
 
@@ -47,7 +48,7 @@ post('/pj_manager/projects') do
   due_date = params.fetch('due_date')
   project = Project.create({client: client, description: description, due_date: due_date})
   @projects = Project.all()
-  # @employees = Employee.all()
+  @employees = Employee.all()
   erb(:pj_manager)
 end
 
@@ -94,11 +95,20 @@ patch('/hr_manager/divisions/:id') do
 end
 
 patch('/hr_manager/employees/:id') do
+  @projects = Project.all()
   @employee = Employee.find(params.fetch('id').to_i())
   first_name = params.fetch("first_name")
   last_name = params.fetch('last_name')
   email = params.fetch('email')
-  division_id = params.fetch('division_id')
+  division_id = params.fetch('division_id', @employee.division_id())
+  if division_id
+    division = Division.find(division_id.to_i())
+  end
+  project_id = params.fetch("project_id", nil)
+  if project_id
+    project = Project.find(project_id.to_i())
+    @employee.projects.push(project)
+  end
   @employee.update({first_name: first_name, last_name: last_name, email: email, division_id: division_id})
   @divisions = Division.all()
   erb(:employee)

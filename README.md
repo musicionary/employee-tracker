@@ -1,20 +1,44 @@
-Build an app for a company to help track employees and the current projects they're assigned.
-
-As an HR manager, I want to be able to create divisions in the company (HR, IT, Sales, etc).
-As an HR manager, I want to be able to list, update, and delete divisions.
-As an HR manager, I want to be able to add employees and assign them to a division. An employee will belong to one division and a division will have many employees.
-As an HR manager, I want to be able to choose an individual division and see its employees.
-If you finish the previous requirements, you are well on your way to understanding Active Record!
-
-Here are a few more user stories to consider for the Employee Tracker:
-
-As a project manager, I want to be able to add projects.
-As a project manager, I want to be able to list the current projects.
-As a project manager, I want to be able to assign a project to an employee when I am looking at the project page.
-As a project manager, I want to be able to assign an employee a project when I am looking at the employee page.
 As a project manager, I want to be able to remove employees from projects when their part is completed or they have moved on.
 As a project manager, I want to be able to update which project an employee is working on.
 As a project manager, I want to see all of the employees on a given project.
 For this app, a project has many employees but an employee is assigned to one project at a time.
 
-Think about the HR Manager, Project Manager and employees. Are there other user stories to develop?
+# _employees-projects_
+
+##### This application is a demonstration application designed to show a many-to-many relationship between employees and projects using Active Record.
+
+## Technologies Used
+
+Application: Ruby, Sinatra, Active Record<br>
+Testing: Rspec, Capybara<br>
+Database: Postgres
+
+Installation
+------------
+
+```
+$ git clone https://github.com/musicionary/employees-projects
+```
+
+Install required gems:
+```
+$ bundle install
+```
+
+Create databases:
+```
+rake db:create
+rake db:schema:load
+```
+
+Start the webserver:
+```
+$ ruby app.rb
+```
+
+Navigate to `localhost:4567` in browser.
+
+License
+-------
+
+GNU GPL v2. Copyright 2015 **Chip Carnes**

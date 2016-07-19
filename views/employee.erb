@@ -32,7 +32,35 @@
         </td>
       </tr>
     </table>
+
+    <% if @projects.any?() %>
+      <h3 class="table_title">Assign project to <%= @employee.first_name() %></h3>
+      <select id="project_id" name="project_id">
+        <option value="" disabled="disabled" selected="selected"></option>
+        <% @projects.each() do |project| %>
+          <% if @employee.projects().include?(project) == false %>
+            <option value="<%= project.id() %>"><%= project.client() %></option>
+          <% end %>
+        <% end %>
+      </select>
+    <% else %>
+      <h3>There are no projects for this employee. <span class="add_prompt">Please document your employees.</span></h3>
+    <% end %>
+
     <button type="submit">Save Changes</button>
   </form>
   <a href="/hr_manager" class="btn btn-default" role="button">Back</a>
 </div>
+
+<% if @employee.projects().any?() %>
+  <div class="wrapper">
+    <h3><%= @employee.first_name() %>'s Projects</h3>
+    <ul>
+      <% @employee.projects().each do |project| %>
+        <li><%= project.client() %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<a href="/" class="btn btn-lg btn-primary" role="button">Home</a>
